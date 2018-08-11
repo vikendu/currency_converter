@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">Converter</string>
+    <string name="textbox">Enter amount in ₹:</string>
+    <string name="convert">CONVERT NOW!</string>
+</resources>
