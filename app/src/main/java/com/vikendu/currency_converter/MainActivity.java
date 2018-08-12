@@ -58,6 +58,7 @@ public class MainActivity extends AppCompatActivity {
                 if(mEditText.getText().toString().equals(""))
                 {
                     Toast.makeText(MainActivity.this, "Enter Some Amount", Toast.LENGTH_SHORT).show();
+                    output.setText("");
                 }
                 else {
                     res = Double.parseDouble(mEditText.getText().toString()) / (double) f;
