@@ -55,18 +55,24 @@ public class MainActivity extends AppCompatActivity {
                 float f = (currencyObj.USD_INR);
                 dollar.setText("Today's Price = "+f);
                 Double res;
-                res = Double.parseDouble(mEditText.getText().toString())/ (double)f;;
-
-                long factor = (long) Math.pow(10, 2);
-                res = res * factor;
-                long tmp = Math.round(res);
-                double res2 = (double) tmp / factor;
-
-
-                //Log.d("obtained value",Float.toString(res));
-                output.setText("$"+Double.toString(res2));
+                if(mEditText.getText().toString().equals(""))
+                {
+                    Toast.makeText(MainActivity.this, "Enter Some Amount", Toast.LENGTH_SHORT).show();
+                }
+                else {
+                    res = Double.parseDouble(mEditText.getText().toString()) / (double) f;
 
 
+                    long factor = (long) Math.pow(10, 2);
+                    res = res * factor;
+                    long tmp = Math.round(res);
+                    double res2 = (double) tmp / factor;
+
+
+                    //Log.d("obtained value",Float.toString(res));
+                    output.setText("$" + Double.toString(res2));
+
+                     }
                 //Toast.makeText(MainActivity.this,currencyObj,Toast.LENGTH_SHORT).show();
             }
 
