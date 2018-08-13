@@ -32,11 +32,6 @@ public class MainActivity extends AppCompatActivity {
 
         return (double) tmp / factor;
         }
-//    public float currency(float in2)
-//    {
-//        curr_final = in2;
-//        return curr_final;
-//    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -53,10 +48,6 @@ public class MainActivity extends AppCompatActivity {
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
 
-        mButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
         currencyServive c1 = retrofit.create(currencyServive.class);
         c1.getExchange().enqueue(new Callback<currency>() {
             @Override
@@ -64,9 +55,19 @@ public class MainActivity extends AppCompatActivity {
                 //List<currency> currencyList = Response.body();
                 currency currencyObj = response.body();
                 //assert currencyObj != null;
-                float f = (currencyObj.USD_INR);
-                curr_final = f;
-                dollar.setText("Today's Price ₹"+f);
+                curr_final = (currencyObj.USD_INR);
+                dollar.setText("Today's Price ₹"+curr_final);
+            }
+                @Override
+                public void onFailure(Call<currency> call, Throwable t) {
+                    Toast.makeText(MainActivity.this, "Connection error", Toast.LENGTH_SHORT).show();
+                }
+            });
+
+        mButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
                 Double res;
                 if(mEditText.getText().toString().equals(""))
                 {
@@ -74,27 +75,20 @@ public class MainActivity extends AppCompatActivity {
                     output.setText("");
                 }
                 else if (mTextView.getText().toString().equals("Enter amount in ₹:")) {
-                    res = Double.parseDouble(mEditText.getText().toString()) / (double) f;
+                    res = Double.parseDouble(mEditText.getText().toString()) / (double) curr_final;
                     output.setText("$" + reduce_deci(res));
                 }
                 else {
-                    res = Double.parseDouble(mEditText.getText().toString()) * (double) f;
+                    res = Double.parseDouble(mEditText.getText().toString()) * (double) curr_final;
                     //Log.d("obtained value",Float.toString(res));
                     output.setText("₹" + reduce_deci(res));
-
                      }
             }
-            @Override
-            public void onFailure(Call<currency> call, Throwable t) {
-                Toast.makeText(MainActivity.this, "Connection error", Toast.LENGTH_SHORT).show();
-            }
-        });
-            }
-        });
+            });
+
         mButton2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 if (mTextView.getText().toString().equals("Enter amount in ₹:")) {
                     mTextView.setText("Enter amount in $:");
                     mButton2.setText("Switch $ with ₹");
@@ -103,10 +97,8 @@ public class MainActivity extends AppCompatActivity {
                         double res = Double.parseDouble(mEditText.getText().toString()) * (double) curr_final;
                         output.setText("₹" + reduce_deci(res));
                     }
-
                 }
                 else
-
                 {
                     mTextView.setText("Enter amount in ₹:");
                     mButton2.setText("Switch ₹ with $");
@@ -116,22 +108,8 @@ public class MainActivity extends AppCompatActivity {
                         output.setText("$" + reduce_deci(res));
                     }
                 }
-                currencyServive c1 = retrofit.create(currencyServive.class);
-                c1.getExchange().enqueue(new Callback<currency>() {
-                    @Override
-                    public void onResponse(Call<currency> call, Response<currency> response) {
-                        //List<currency> currencyList = Response.body();
-                        currency currencyObj = response.body();
-                        //assert currencyObj != null;
-                        float f = (currencyObj.USD_INR);
-                        dollar.setText("Today's Price ₹"+f);
-                    }
-                    @Override
-                    public void onFailure(Call<currency> call, Throwable t) {
-                        Toast.makeText(MainActivity.this, "Connection error", Toast.LENGTH_SHORT).show();
                     }
                 });
             }
-        });
-    }
-}
+            }
+
