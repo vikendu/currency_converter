@@ -99,8 +99,10 @@ public class MainActivity extends AppCompatActivity {
                     mTextView.setText("Enter amount in $:");
                     mButton2.setText("Switch $ with ₹");
 //                    double f = Double.parseDouble(dollar.getText().toString());
-                    double res = Double.parseDouble(mEditText.getText().toString()) * (double) curr_final;
-                    output.setText("₹" + reduce_deci(res));
+                    if(!(mEditText.getText().toString().equals(""))) {
+                        double res = Double.parseDouble(mEditText.getText().toString()) * (double) curr_final;
+                        output.setText("₹" + reduce_deci(res));
+                    }
 
                 }
                 else
@@ -108,8 +110,10 @@ public class MainActivity extends AppCompatActivity {
                     mTextView.setText("Enter amount in ₹:");
                     mButton2.setText("Switch ₹ with $");
 //                    double f = Double.parseDouble(dollar.getText().toString());
-                    double res = Double.parseDouble(mEditText.getText().toString()) / (double) curr_final;
-                    output.setText("₹" + reduce_deci(res));
+                    if(!(mEditText.getText().toString().equals(""))) {
+                        double res = Double.parseDouble(mEditText.getText().toString()) / (double) curr_final;
+                        output.setText("₹" + reduce_deci(res));
+                    }
                 }
                 currencyServive c1 = retrofit.create(currencyServive.class);
                 c1.getExchange().enqueue(new Callback<currency>() {
