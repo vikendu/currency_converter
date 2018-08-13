@@ -112,7 +112,7 @@ public class MainActivity extends AppCompatActivity {
 //                    double f = Double.parseDouble(dollar.getText().toString());
                     if(!(mEditText.getText().toString().equals(""))) {
                         double res = Double.parseDouble(mEditText.getText().toString()) / (double) curr_final;
-                        output.setText("₹" + reduce_deci(res));
+                        output.setText("$" + reduce_deci(res));
                     }
                 }
                 currencyServive c1 = retrofit.create(currencyServive.class);
