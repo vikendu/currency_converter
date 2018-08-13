@@ -106,6 +106,7 @@ public class MainActivity extends AppCompatActivity {
 
                 }
                 else
+
                 {
                     mTextView.setText("Enter amount in ₹:");
                     mButton2.setText("Switch ₹ with $");
