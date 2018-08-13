@@ -22,7 +22,21 @@ public class MainActivity extends AppCompatActivity {
     TextView mTextView, output, dollar;
     EditText mEditText;
     Button mButton, mButton2;
+    float curr_final = 0.0f;
 
+    public double reduce_deci(double in)
+    {
+        long factor = (long) Math.pow(10, 2);
+        in = in * factor;
+        long tmp = Math.round(in);
+
+        return (double) tmp / factor;
+        }
+//    public float currency(float in2)
+//    {
+//        curr_final = in2;
+//        return curr_final;
+//    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -39,7 +53,6 @@ public class MainActivity extends AppCompatActivity {
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
 
-
         mButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -52,6 +65,7 @@ public class MainActivity extends AppCompatActivity {
                 currency currencyObj = response.body();
                 //assert currencyObj != null;
                 float f = (currencyObj.USD_INR);
+                curr_final = f;
                 dollar.setText("Today's Price ₹"+f);
                 Double res;
                 if(mEditText.getText().toString().equals(""))
@@ -61,43 +75,22 @@ public class MainActivity extends AppCompatActivity {
                 }
                 else if (mTextView.getText().toString().equals("Enter amount in ₹:")) {
                     res = Double.parseDouble(mEditText.getText().toString()) / (double) f;
-
-
-                    long factor = (long) Math.pow(10, 2);
-                    res = res * factor;
-                    long tmp = Math.round(res);
-                    double res2 = (double) tmp / factor;
-
-                    output.setText("$" + Double.toString(res2));
+                    output.setText("$" + reduce_deci(res));
                 }
                 else {
                     res = Double.parseDouble(mEditText.getText().toString()) * (double) f;
-
-
-                    long factor = (long) Math.pow(10, 2);
-                    res = res * factor;
-                    long tmp = Math.round(res);
-                    double res2 = (double) tmp / factor;
-
-
                     //Log.d("obtained value",Float.toString(res));
-                    output.setText("₹" + Double.toString(res2));
+                    output.setText("₹" + reduce_deci(res));
 
                      }
-                //Toast.makeText(MainActivity.this,currencyObj,Toast.LENGTH_SHORT).show();
             }
-
             @Override
             public void onFailure(Call<currency> call, Throwable t) {
                 Toast.makeText(MainActivity.this, "Connection error", Toast.LENGTH_SHORT).show();
-
             }
-
-
         });
             }
         });
-
         mButton2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -105,11 +98,18 @@ public class MainActivity extends AppCompatActivity {
                 if (mTextView.getText().toString().equals("Enter amount in ₹:")) {
                     mTextView.setText("Enter amount in $:");
                     mButton2.setText("Switch $ with ₹");
+//                    double f = Double.parseDouble(dollar.getText().toString());
+                    double res = Double.parseDouble(mEditText.getText().toString()) * (double) curr_final;
+                    output.setText("₹" + reduce_deci(res));
+
                 }
                 else
                 {
                     mTextView.setText("Enter amount in ₹:");
                     mButton2.setText("Switch ₹ with $");
+//                    double f = Double.parseDouble(dollar.getText().toString());
+                    double res = Double.parseDouble(mEditText.getText().toString()) / (double) curr_final;
+                    output.setText("₹" + reduce_deci(res));
                 }
                 currencyServive c1 = retrofit.create(currencyServive.class);
                 c1.getExchange().enqueue(new Callback<currency>() {
@@ -120,18 +120,11 @@ public class MainActivity extends AppCompatActivity {
                         //assert currencyObj != null;
                         float f = (currencyObj.USD_INR);
                         dollar.setText("Today's Price ₹"+f);
-
-
-                        //Toast.makeText(MainActivity.this,currencyObj,Toast.LENGTH_SHORT).show();
                     }
-
                     @Override
                     public void onFailure(Call<currency> call, Throwable t) {
                         Toast.makeText(MainActivity.this, "Connection error", Toast.LENGTH_SHORT).show();
-
                     }
-
-
                 });
             }
         });
