@@ -2,14 +2,14 @@ package com.vikendu.currency_converter;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import java.util.List;
+import java.util.Calendar;
+import java.util.Date;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -19,7 +19,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class MainActivity extends AppCompatActivity {
 
-    TextView mTextView, output, dollar;
+    TextView mTextView, output, dollar, last_update;
     EditText mEditText;
     Button mButton, mButton2;
     float curr_final = 0.0f;
@@ -31,7 +31,11 @@ public class MainActivity extends AppCompatActivity {
         long tmp = Math.round(in);
 
         return (double) tmp / factor;
-        }
+    }
+    public void enter_val()
+    {
+            Toast.makeText(MainActivity.this, "Enter Some Amount", Toast.LENGTH_SHORT).show();
+    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -43,6 +47,8 @@ public class MainActivity extends AppCompatActivity {
         output = findViewById(R.id.textView);
         dollar = findViewById(R.id.textView3);
         mButton2 = findViewById(R.id.switch_but);
+        last_update = findViewById(R.id.textView2);
+
         final Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl("https://free.currencyconverterapi.com/")
                 .addConverterFactory(GsonConverterFactory.create())
@@ -52,11 +58,13 @@ public class MainActivity extends AppCompatActivity {
         c1.getExchange().enqueue(new Callback<currency>() {
             @Override
             public void onResponse(Call<currency> call, Response<currency> response) {
-                //List<currency> currencyList = Response.body();
                 currency currencyObj = response.body();
-                //assert currencyObj != null;
+
                 curr_final = (currencyObj.USD_INR);
                 dollar.setText("Today's Price ₹"+curr_final);
+
+                Date currentTime = Calendar.getInstance().getTime();
+                last_update.setText("Last Updated: "+currentTime);
             }
                 @Override
                 public void onFailure(Call<currency> call, Throwable t) {
@@ -71,7 +79,7 @@ public class MainActivity extends AppCompatActivity {
                 Double res;
                 if(mEditText.getText().toString().equals(""))
                 {
-                    Toast.makeText(MainActivity.this, "Enter Some Amount", Toast.LENGTH_SHORT).show();
+                    enter_val();
                     output.setText("");
                 }
                 else if (mTextView.getText().toString().equals("Enter amount in ₹:")) {
@@ -80,20 +88,19 @@ public class MainActivity extends AppCompatActivity {
                 }
                 else {
                     res = Double.parseDouble(mEditText.getText().toString()) * (double) curr_final;
-                    //Log.d("obtained value",Float.toString(res));
                     output.setText("₹" + reduce_deci(res));
                      }
             }
             });
-
         mButton2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (mTextView.getText().toString().equals("Enter amount in ₹:")) {
                     mTextView.setText("Enter amount in $:");
                     mButton2.setText("Switch $ with ₹");
-//                    double f = Double.parseDouble(dollar.getText().toString());
+
                     if(!(mEditText.getText().toString().equals(""))) {
+
                         double res = Double.parseDouble(mEditText.getText().toString()) * (double) curr_final;
                         output.setText("₹" + reduce_deci(res));
                     }
@@ -102,8 +109,9 @@ public class MainActivity extends AppCompatActivity {
                 {
                     mTextView.setText("Enter amount in ₹:");
                     mButton2.setText("Switch ₹ with $");
-//                    double f = Double.parseDouble(dollar.getText().toString());
+
                     if(!(mEditText.getText().toString().equals(""))) {
+
                         double res = Double.parseDouble(mEditText.getText().toString()) / (double) curr_final;
                         output.setText("$" + reduce_deci(res));
                     }
