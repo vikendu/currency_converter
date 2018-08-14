@@ -22,7 +22,7 @@ public class MainActivity extends AppCompatActivity {
     TextView mTextView, output, dollar, last_update;
     EditText mEditText;
     Button mButton, mButton2;
-    float curr_final = 0.0f;
+    double curr_final = 0.0d;
 
     public double reduce_deci(double in)
     {
@@ -54,14 +54,15 @@ public class MainActivity extends AppCompatActivity {
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
 
-        currencyServive c1 = retrofit.create(currencyServive.class);
+        currencyService c1 = retrofit.create(currencyService.class);
         c1.getExchange().enqueue(new Callback<currency>() {
             @Override
             public void onResponse(Call<currency> call, Response<currency> response) {
                 currency currencyObj = response.body();
 
                 curr_final = (currencyObj.USD_INR);
-                dollar.setText("Today's Price ₹"+curr_final);
+
+                dollar.setText("Latest Price ₹"+reduce_deci(curr_final));
 
                 Date currentTime = Calendar.getInstance().getTime();
                 last_update.setText("Last Updated: "+currentTime);
