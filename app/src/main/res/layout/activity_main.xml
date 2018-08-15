@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/relativeLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -14,16 +13,19 @@
         android:id="@+id/textView4"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+
         android:layout_gravity="center"
-        android:layout_marginBottom="105dp"
+        android:layout_marginBottom="4dp"
         android:layout_marginTop="274dp"
         android:gravity="center"
-        android:text="@string/textbox"
-        android:textAlignment="center"
 
-        android:textColor="#33331b"
+        android:text="@string/textbox"
+
+        android:textAlignment="center"
+        android:textColor="@color/text_"
         android:textSize="25sp"
-        app:layout_constraintBottom_toTopOf="@+id/switch_but"
+
+        app:layout_constraintBottom_toTopOf="@+id/editText2"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
@@ -34,9 +36,16 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
+
+        android:textColor="@color/text_"
+        android:shadowColor="@color/text_"
+        android:backgroundTint="#bbbbbb"
+        android:textSize="25dp"
         android:ems="10"
+
         android:gravity="center"
         android:inputType="numberDecimal"
+
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
@@ -47,15 +56,17 @@
         android:id="@+id/button2"
         android:layout_width="150dp"
         android:layout_height="50dp"
-
         android:layout_marginBottom="56dp"
-        android:layout_marginStart="32dp"
+        android:layout_marginRight="50dp"
+        android:layout_marginStart="50dp"
         android:layout_marginTop="60dp"
 
-
+        android:background="@drawable/button"
+        android:backgroundTint="@color/back"
+        android:textColor="@color/text_butt"
         android:gravity="center"
-        android:text="@string/convert"
 
+        android:text="@string/convert"
 
         app:layout_constraintBottom_toTopOf="@+id/textView"
         app:layout_constraintRight_toRightOf="parent"
@@ -68,11 +79,12 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="64dp"
+
         android:text=""
         android:textAlignment="center"
-
-
+        android:textColor="@color/text_"
         android:textSize="40sp"
+
         app:layout_constraintBottom_toTopOf="@+id/textView3"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintLeft_toLeftOf="parent"
@@ -83,9 +95,12 @@
         android:layout_width="match_parent"
         android:layout_height="33dp"
         android:layout_marginBottom="28dp"
+
         android:text=""
+        android:textColor="@color/text_"
         android:textAlignment="center"
         android:textSize="15sp"
+
         app:layout_constraintBottom_toTopOf="@+id/textView2"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintLeft_toLeftOf="parent"
@@ -96,10 +111,13 @@
         android:layout_width="150dp"
         android:layout_height="50dp"
         android:layout_marginBottom="56dp"
-
-        android:layout_marginEnd="32dp"
-
+        android:layout_marginEnd="50dp"
+        android:layout_marginStart="16dp"
         android:layout_marginTop="60dp"
+
+        android:background="@drawable/button"
+        android:backgroundTint="@color/back"
+        android:textColor="@color/text_butt"
         android:text="@string/switch_but"
 
         app:layout_constraintBottom_toTopOf="@+id/textView"
@@ -117,11 +135,12 @@
         android:layout_marginBottom="32dp"
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
-        android:text=""
 
+        android:text=""
         android:textAlignment="center"
-        android:textColor="#33331b"
+        android:textColor="@color/text_"
         android:textSize="12sp"
+
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintLeft_toLeftOf="parent"
@@ -135,6 +154,7 @@
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
+
         app:layout_constraintBottom_toTopOf="@+id/textView4"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
