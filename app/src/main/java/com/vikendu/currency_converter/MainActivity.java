@@ -49,6 +49,8 @@ public class MainActivity extends AppCompatActivity {
         mButton2 = findViewById(R.id.switch_but);
         last_update = findViewById(R.id.textView2);
 
+        output.setText("$0.0");
+
         final Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl("https://free.currencyconverterapi.com/")
                 .addConverterFactory(GsonConverterFactory.create())
@@ -96,6 +98,16 @@ public class MainActivity extends AppCompatActivity {
         mButton2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if(output.getText().toString().equals("$0.0"))
+                {
+                    output.setText("₹0.0");
+
+                }
+                else if(output.getText().toString().equals("₹0.0"))
+                {
+                    output.setText("$0.0");
+                }
+
                 if (mTextView.getText().toString().equals("Enter amount in ₹:")) {
                     mTextView.setText("Enter amount in $:");
                     mButton2.setText("Switch $ with ₹");
